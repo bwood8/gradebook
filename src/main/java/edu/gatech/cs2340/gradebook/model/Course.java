@@ -3,18 +3,19 @@ package main.java.edu.gatech.cs2340.gradebook.model;
 import java.util.ArrayList;
 
 /** 
- * Course class 
+ * A Course has a subject, course number, name, and prerequisite courses. 
  *
  * @author Brittany Wood
  */
 
 public class Course {
-    String subject;
-    int courseNumber;
-    String courseName;
-    ArrayList<Course> prerequisites;
+    private String subject;
+    private int courseNumber;
+    private String courseName;
+    private ArrayList<Course> prerequisites;
 
-    public Course (String subject, int courseNumber, String courseName, ArrayList<Course> prerequisites) {
+    public Course (String subject, int courseNumber, String courseName, 
+            ArrayList<Course> prerequisites) {
         this.subject = subject;
         this.courseNumber = courseNumber;
         this.courseName = courseName;
@@ -24,7 +25,7 @@ public class Course {
     public String getSubject() {
         return subject;
     }
-    
+
     public void setSubject(String subject) {
         this.subject = subject;
     }
@@ -40,7 +41,7 @@ public class Course {
     public String getCourseName() {
         return courseName;
     }
-    
+
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
@@ -48,7 +49,7 @@ public class Course {
     public ArrayList<Course> getPrerequisites() {
         return prerequisites;
     }
-    
+
     public void setPrerequisites(ArrayList<Course> prerequisites) {
         this.prerequisites = prerequisites;
     }
