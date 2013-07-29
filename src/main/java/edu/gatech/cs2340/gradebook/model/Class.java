@@ -7,7 +7,7 @@ package main.java.edu.gatech.cs2340.gradebook.model;
  * @author Brittany Wood
  */
 
-public final class Class extends Course {
+public class Class extends Course {
     private String semester;
     private final Course course;
 

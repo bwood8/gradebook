@@ -14,8 +14,8 @@ public class Student {
     private ArrayList<GradebookItem> gradebookItems = 
         new ArrayList<GradebookItem>();
 
-    public Student(String name) {
-        this.name = name;
+    public Student(String aName) {
+        name = aName;
     }
 
     public String getName() {
