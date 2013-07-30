@@ -12,6 +12,8 @@ public class Section extends Class {
     private String sectionName;
     private Class parentClass;
     private ArrayList<Student> students = new ArrayList<Student>();
+    private int averageScore;
+    private String averageLetterGrade;
 
     public Section(String sectionName, Class parentClass) {
         super(parentClass.getCourse(), parentClass.getSemester());
@@ -42,4 +44,15 @@ public class Section extends Class {
     public void addStudent(Student newStudent) {
         students.add(newStudent);
     }
+
+    public int calculateAverageScore(GradingScheme gradingScheme) {
+        double sum = 0;
+        for (int i = 0; i < students.size(); i++) {
+            sum += students.get(i).calculateScore(gradingScheme);
+        }
+        double finalScore = sum / students.size();
+        averageScore = (int) finalScore;
+        return averageScore;
+    }
+
 }

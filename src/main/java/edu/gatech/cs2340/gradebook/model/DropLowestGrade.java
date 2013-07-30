@@ -12,7 +12,9 @@ import java.util.ArrayList;
 public class DropLowestGrade implements GradingScheme {
 
     private ArrayList<GradebookItem> gradebookItems;
+    private int finalScore;
     private String letterGrade;
+    private boolean haveNotDropped = true;
 
     public void addGradebookItems(ArrayList<GradebookItem> aGradebookItems) {
         gradebookItems = aGradebookItems;
@@ -30,7 +32,10 @@ public class DropLowestGrade implements GradingScheme {
     }
 
     public int calculateScore() {
-        dropLowestGrade();
+        if (haveNotDropped) {
+            dropLowestGrade();
+            haveNotDropped = false;
+        }
         ArrayList<GradebookCategory> categoriesCalculated =
             new ArrayList<GradebookCategory>();
         double score = 0;
@@ -48,10 +53,22 @@ public class DropLowestGrade implements GradingScheme {
                 categoriesCalculated.add(currentCategory);
             }
         }
-        return (int) Math.round(score);
+        finalScore = (int) Math.round(score);
+        return finalScore;
     }
 
-    public String calculateLetterGrade() {
+    public String calculateLetterGrade(int score) {
+        if (score >= GradingScheme.A_CUTOFF) {
+             letterGrade = "A";
+        } else if (score >= GradingScheme.B_CUTOFF) {
+            letterGrade = "B";
+        } else if (score >= GradingScheme.C_CUTOFF) {
+            letterGrade = "C";
+        } else if (score >= GradingScheme.D_CUTOFF) {
+            letterGrade = "D";
+        } else {
+            letterGrade = "F";
+        }
         return letterGrade;
     }
 
@@ -60,7 +77,7 @@ public class DropLowestGrade implements GradingScheme {
         GradebookCategory currentCategory = category;
         int runningTotal = 0;
         int counter = 0;
-        for (int i = 1; i < gradebookItems.size(); i++) {
+        for (int i = 0; i < gradebookItems.size(); i++) {
             currentItem = gradebookItems.get(i);
             if (currentItem.getGradebookCategory() == currentCategory) {
                 runningTotal += currentItem.getScore();

@@ -13,6 +13,9 @@ public class Course {
     private int courseNumber;
     private String courseName;
     private ArrayList<Course> prerequisites;
+    private boolean scoreCalculated = false;
+    private String letterGrade;
+    private int score;
 
     public Course(String subject, int courseNumber, String courseName) {
         this.subject = subject;
@@ -58,5 +61,20 @@ public class Course {
 
     public void setPrerequisites(ArrayList<Course> prerequisites) {
         this.prerequisites = prerequisites;
+    }
+
+    public int calculateScore(GradingScheme gradingScheme) {
+        score = 90;
+        return score;
+    }
+
+    public String calculateLetterGrade(GradingScheme gradingScheme) {
+         if (scoreCalculated) {
+             letterGrade = gradingScheme.calculateLetterGrade(score);
+         } else {
+             score = calculateScore(gradingScheme);
+             letterGrade = gradingScheme.calculateLetterGrade(score);
+         }
+         return letterGrade;
     }
 }

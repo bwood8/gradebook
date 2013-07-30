@@ -12,6 +12,9 @@ public class Student {
     private String name;
     private ArrayList<GradebookItem> gradebookItems =
         new ArrayList<GradebookItem>();
+    private int score;
+    private String letterGrade;
+    private boolean scoreCalculated = false;
 
     public Student(String aName) {
         name = aName;
@@ -31,5 +34,22 @@ public class Student {
 
     public void addGradebookItem(GradebookItem gradebookItem) {
         gradebookItems.add(gradebookItem);
+    }
+
+    public int calculateScore(GradingScheme gradingScheme) {
+         gradingScheme.addGradebookItems(gradebookItems);
+         score = gradingScheme.calculateScore();
+         scoreCalculated = true;
+         return score;
+    }
+
+    public String calculateLetterGrade(GradingScheme gradingScheme) {
+         if (scoreCalculated) {
+             letterGrade = gradingScheme.calculateLetterGrade(score);
+         } else {
+             score = calculateScore(gradingScheme);
+             letterGrade = gradingScheme.calculateLetterGrade(score);
+         }
+         return letterGrade;
     }
 }
