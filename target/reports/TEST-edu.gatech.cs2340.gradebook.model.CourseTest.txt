@@ -1,0 +1,5 @@
+Testsuite: edu.gatech.cs2340.gradebook.model.CourseTest
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0.08 sec
+
+Testcase: testGetAndCreate took 0.008 sec
+Testcase: testSetters took 0.001 sec

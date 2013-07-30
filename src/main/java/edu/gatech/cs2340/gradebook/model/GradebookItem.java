@@ -1,8 +1,8 @@
 package main.java.edu.gatech.cs2340.gradebook.model;
 
-/*
+/**
  * A class to represent gradebook items which have a name, GradebookCategory,
- * and a score. 
+ * and a score.
  *
  * @author Brittany Wood
  */
@@ -12,13 +12,13 @@ public class GradebookItem {
     private GradebookCategory gradebookCategory;
     private int score;
 
-    public GradebookItem (String aName, GradebookCategory aGradebookCategory,
+    public GradebookItem(String aName, GradebookCategory aGradebookCategory,
              int aScore) {
         name = aName;
         gradebookCategory = aGradebookCategory;
         score = aScore;
     }
-    
+
     public String getName() {
         return name;
     }

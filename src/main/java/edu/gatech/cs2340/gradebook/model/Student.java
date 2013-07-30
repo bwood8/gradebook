@@ -2,16 +2,15 @@ package main.java.edu.gatech.cs2340.gradebook.model;
 
 import java.util.ArrayList;
 
-/*
- * A Student has a name and is given GradebookItem scores. The class reports 
+/**
+ * A Student has a name and is given GradebookItem scores. The class reports
  * a score and letter grade based on a GradingScheme.
  *
  * @author Brittany Wood
  */
-
 public class Student {
     private String name;
-    private ArrayList<GradebookItem> gradebookItems = 
+    private ArrayList<GradebookItem> gradebookItems =
         new ArrayList<GradebookItem>();
 
     public Student(String aName) {

@@ -1,0 +1,6 @@
+Testsuite: edu.gatech.cs2340.gradebook.model.ClassTest
+Tests run: 3, Failures: 0, Errors: 0, Time elapsed: 0.089 sec
+
+Testcase: testAddAndGetSection took 0.014 sec
+Testcase: testGetAndSet took 0 sec
+Testcase: testCreate took 0 sec

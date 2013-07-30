@@ -1,6 +1,6 @@
 package main.java.edu.gatech.cs2340.gradebook.model;
 
-/*
+/**
  * Class representing GradebookCategories
  *
  * @author Brittany Wood
@@ -17,7 +17,7 @@ public class GradebookCategory {
 
     public String getName() {
         return name;
-    } 
+    }
 
     public void setName(String aName) {
         name = aName;

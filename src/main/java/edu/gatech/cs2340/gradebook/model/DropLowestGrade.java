@@ -2,7 +2,7 @@ package main.java.edu.gatech.cs2340.gradebook.model;
 
 import java.util.ArrayList;
 
-/*
+/**
  * Provides ability to calculate average score and letter grade which drops
  * the lowest grade
  *
@@ -21,8 +21,8 @@ public class DropLowestGrade implements GradingScheme {
     public void dropLowestGrade() {
         int lowestGradeIndex = 0;
         for (int i = 1; i < gradebookItems.size(); i++) {
-            if (gradebookItems.get(i).getScore() < 
-                    gradebookItems.get(lowestGradeIndex).getScore()) {
+            if (gradebookItems.get(i).getScore()
+                    < gradebookItems.get(lowestGradeIndex).getScore()) {
                 lowestGradeIndex = i;
             }
         }
@@ -48,12 +48,13 @@ public class DropLowestGrade implements GradingScheme {
                 categoriesCalculated.add(currentCategory);
             }
         }
-        return (int) Math.round(score); 
+        return (int) Math.round(score);
     }
 
     public String calculateLetterGrade() {
-	return letterGrade;
+        return letterGrade;
     }
+
     public double getCategoryAverage(GradebookCategory category) {
         GradebookItem currentItem;
         GradebookCategory currentCategory = category;
