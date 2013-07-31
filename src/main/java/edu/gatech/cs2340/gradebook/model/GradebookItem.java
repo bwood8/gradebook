@@ -10,13 +10,20 @@ package main.java.edu.gatech.cs2340.gradebook.model;
 public class GradebookItem {
     private String name;
     private GradebookCategory gradebookCategory;
-    private int score;
+    private double score;
+
+    public GradebookItem(String aName, GradebookCategory aGradebookCategory,
+             double aScore) {
+        name = aName;
+        gradebookCategory = aGradebookCategory;
+        score = aScore;
+    }
 
     public GradebookItem(String aName, GradebookCategory aGradebookCategory,
              int aScore) {
         name = aName;
         gradebookCategory = aGradebookCategory;
-        score = aScore;
+        score = (double) aScore;
     }
 
     public String getName() {
@@ -35,11 +42,11 @@ public class GradebookItem {
         gradebookCategory = aGradebookCategory;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int aScore) {
+    public void setScore(double aScore) {
         score = aScore;
     }
 }

@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 /**
  * Provides ability to calculate average score and letter grade which drops
- * the lowest grade
+ * the lowest grade, given there is at least one category with more than
+ * one grade in it.
  *
  * @author Brittany Wood
  */
 
-public class DropLowestGrade implements GradingScheme {
+public class DropLowestGrade extends StandardGrading implements GradingScheme {
 
     private ArrayList<GradebookItem> gradebookItems;
-    private int finalScore;
+    private double finalScore;
     private String letterGrade;
     private boolean haveNotDropped = true;
 
@@ -21,43 +22,33 @@ public class DropLowestGrade implements GradingScheme {
     }
 
     public void dropLowestGrade() {
-        int lowestGradeIndex = 0;
-        for (int i = 1; i < gradebookItems.size(); i++) {
-            if (gradebookItems.get(i).getScore()
-                    < gradebookItems.get(lowestGradeIndex).getScore()) {
-                lowestGradeIndex = i;
+        if (gradebookItems.size() > 1) {
+            int lowestGradeIndex = 0;
+            for (int i = 1; i < gradebookItems.size(); i++) {
+                GradebookCategory currentCategory =
+                    gradebookItems.get(i).getGradebookCategory();
+                if (checkIfDropEligible(currentCategory)) {
+                    if (gradebookItems.get(i).getScore()
+                           < gradebookItems.get(lowestGradeIndex).getScore()) {
+                        lowestGradeIndex = i;
+                    }
+                }
             }
+            gradebookItems.remove(lowestGradeIndex);
         }
-        gradebookItems.remove(lowestGradeIndex);
     }
 
-    public int calculateScore() {
+    public double calculateScore() {
         if (haveNotDropped) {
             dropLowestGrade();
             haveNotDropped = false;
         }
-        ArrayList<GradebookCategory> categoriesCalculated =
-            new ArrayList<GradebookCategory>();
-        double score = 0;
-        double categoryScore;
-        double categoryWeight;
-        GradebookCategory currentCategory;
-        GradebookItem currentItem;
-        for (int i = 0; i < gradebookItems.size(); i++) {
-            currentItem = gradebookItems.get(i);
-            currentCategory = currentItem.getGradebookCategory();
-            if (!categoriesCalculated.contains(currentCategory)) {
-                categoryScore = getCategoryAverage(currentCategory);
-                categoryWeight = currentCategory.getPercentWeight();
-                score += (categoryScore * categoryWeight);
-                categoriesCalculated.add(currentCategory);
-            }
-        }
-        finalScore = (int) Math.round(score);
+        super.addGradebookItems(gradebookItems);
+        finalScore = super.calculateScore();
         return finalScore;
     }
 
-    public String calculateLetterGrade(int score) {
+    public String calculateLetterGrade(double score) {
         if (score >= GradingScheme.A_CUTOFF) {
              letterGrade = "A";
         } else if (score >= GradingScheme.B_CUTOFF) {
@@ -72,18 +63,18 @@ public class DropLowestGrade implements GradingScheme {
         return letterGrade;
     }
 
-    public double getCategoryAverage(GradebookCategory category) {
-        GradebookItem currentItem;
-        GradebookCategory currentCategory = category;
-        int runningTotal = 0;
+    public boolean checkIfDropEligible(GradebookCategory gradebookCategory) {
         int counter = 0;
+        boolean result = false;
         for (int i = 0; i < gradebookItems.size(); i++) {
-            currentItem = gradebookItems.get(i);
-            if (currentItem.getGradebookCategory() == currentCategory) {
-                runningTotal += currentItem.getScore();
+            if (gradebookItems.get(i).getGradebookCategory()
+                    == gradebookCategory) {
                 counter++;
+                if (counter > 1) {
+                    result = true;
+                }
             }
         }
-        return runningTotal / counter;
+        return result;
     }
 }

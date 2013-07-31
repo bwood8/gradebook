@@ -1,6 +1,7 @@
 package main.java.edu.gatech.cs2340.gradebook.model;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 /**
  * A Section belongs to a Class and contains Students.
@@ -12,7 +13,7 @@ public class Section extends Class {
     private String sectionName;
     private Class parentClass;
     private ArrayList<Student> students = new ArrayList<Student>();
-    private int averageScore;
+    private double averageScore;
     private String averageLetterGrade;
 
     public Section(String sectionName, Class parentClass) {
@@ -45,14 +46,14 @@ public class Section extends Class {
         students.add(newStudent);
     }
 
-    public int calculateAverageScore(GradingScheme gradingScheme) {
+    public double calculateAverageScore(GradingScheme gradingScheme) {
         double sum = 0;
         for (int i = 0; i < students.size(); i++) {
             sum += students.get(i).calculateScore(gradingScheme);
         }
-        double finalScore = sum / students.size();
-        averageScore = (int) finalScore;
-        return averageScore;
+        averageScore = sum / students.size();
+        return Double.parseDouble(
+            new DecimalFormat("#.##").format(averageScore));
     }
 
 }

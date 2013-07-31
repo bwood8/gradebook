@@ -6,8 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import main.java.edu.gatech.cs2340.gradebook.model.Class;
-import main.java.edu.gatech.cs2340.gradebook.model.Course;
-import main.java.edu.gatech.cs2340.gradebook.model.Section;
+import main.java.edu.gatech.cs2340.gradebook.model.*;
 
 /**
  * Test for Class class methods.
@@ -17,20 +16,26 @@ import main.java.edu.gatech.cs2340.gradebook.model.Section;
 
 @RunWith(JUnit4.class)
 public class ClassTest {
+    Course course = new Course("CS", 2340, "Objects and Design");
+    Class classAsClass = new Class(course, "Summer 2013");
+    Course classAsCourse = new Class(course, "Summer 2013");
+    Section section = new Section("A", classAsClass);
+    GradebookCategory gradebookCategory = new GradebookCategory("Test", 1);
+    Student newStudent = new Student("Brittany Wood");
+    Student newStudent2 = new Student("Geoff Fountain");
+    Student newStudent3 = new Student("Kathryn Black");
+    Section section2 = new Section("B", classAsClass);
+    Student newStudent4 = new Student("Ana Terron");
+    Student newStudent5 = new Student("Lianne Lewis");
 
     @Test
     public void testCreate() {
-        Course course = new Course("CS", 2340, "Objects and Design");
-        Class classAsClass = new Class(course, "Summer 2013");
-        Course classAsCourse = new Class(course, "Summer 2013");
         assertNotNull("Class as class failed", classAsClass);
         assertNotNull("Class as course failed", classAsCourse);
     }
 
     @Test
     public void testGetAndSet() {
-        Course course = new Course("CS", 2340, "Objects and Design");
-        Class classAsClass = new Class(course, "Summer 2013");
         String subject = classAsClass.getSubject();
         int courseNumber = classAsClass.getCourseNumber();
         String courseName = classAsClass.getCourseName();
@@ -44,11 +49,46 @@ public class ClassTest {
 
     @Test
     public void testAddAndGetSection() {
-       Course course = new Course("CS", 2340, "Objects and Design");
-       Class classAsClass = new Class(course, "Summer 2013");
-       Section section = new Section("A", classAsClass);
        classAsClass.addSection(section);
        ArrayList<Section> sections = classAsClass.getSections();
        assertTrue("Section test failed.", sections.contains(section));
+    }
+
+    @Test
+    public void testAverages() {
+        newStudent.addGradebookItem(new GradebookItem("Test 1",
+             gradebookCategory, 100));
+        newStudent.addGradebookItem(new GradebookItem("Test 2",
+             gradebookCategory, 20));
+        newStudent2.addGradebookItem(new GradebookItem("Test 1",
+             gradebookCategory, 85));
+        newStudent2.addGradebookItem(new GradebookItem("Test 2",
+             gradebookCategory, 90));
+        newStudent3.addGradebookItem(new GradebookItem("Test 1",
+             gradebookCategory, 90));
+        newStudent3.addGradebookItem(new GradebookItem("Test 2",
+             gradebookCategory, 85));
+        section.addStudent(newStudent);
+        section.addStudent(newStudent2);
+        section.addStudent(newStudent3);
+        newStudent4.addGradebookItem(new GradebookItem("Test 1",
+             gradebookCategory, 85));
+        newStudent4.addGradebookItem(new GradebookItem("Test 2",
+             gradebookCategory, 85));
+        newStudent5.addGradebookItem(new GradebookItem("Test 1",
+             gradebookCategory, 85));
+        newStudent5.addGradebookItem(new GradebookItem("Test 2",
+             gradebookCategory, 75));
+        section2.addStudent(newStudent4);
+        section2.addStudent(newStudent5);
+        classAsClass.addSection(section);
+        classAsClass.addSection(section2);
+        assertEquals(2, classAsClass.getSections().size());
+        GradingScheme standard = new StandardGrading();
+        double averageScore = classAsClass.calculateAverageScore(standard);
+        assertEquals(80.41, averageScore, 0.00);
+        String letterGrade = classAsClass.calculateLetterGrade(standard);
+        assertEquals("LetterGrade calculation failed.","B", letterGrade);
+
     }
 }

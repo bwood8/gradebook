@@ -1,6 +1,7 @@
 package main.java.edu.gatech.cs2340.gradebook.model;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 /**
  * A Course has a subject, course number, name, and prerequisite courses.
@@ -15,7 +16,8 @@ public class Course {
     private ArrayList<Course> prerequisites;
     private boolean scoreCalculated = false;
     private String letterGrade;
-    private int score;
+    private double averageScore;
+    private ArrayList<Class> classes = new ArrayList<Class>();
 
     public Course(String subject, int courseNumber, String courseName) {
         this.subject = subject;
@@ -63,17 +65,32 @@ public class Course {
         this.prerequisites = prerequisites;
     }
 
-    public int calculateScore(GradingScheme gradingScheme) {
-        score = 90;
-        return score;
+    public void addClass(Class newClass) {
+        classes.add(newClass);
+    }
+
+    public ArrayList<Class> getClasses() {
+        return classes;
+    }
+
+    public double calculateAverageScore(GradingScheme gradingScheme) {
+        double sum = 0;
+        for (int i = 0; i < classes.size(); i++) {
+            sum += classes.get(i).calculateAverageScore(gradingScheme);
+        }
+        averageScore = sum / classes.size();
+        averageScore = Double.parseDouble(
+            new DecimalFormat("#.##").format(averageScore));
+        scoreCalculated = true;
+        return averageScore;
     }
 
     public String calculateLetterGrade(GradingScheme gradingScheme) {
          if (scoreCalculated) {
-             letterGrade = gradingScheme.calculateLetterGrade(score);
+             letterGrade = gradingScheme.calculateLetterGrade(averageScore);
          } else {
-             score = calculateScore(gradingScheme);
-             letterGrade = gradingScheme.calculateLetterGrade(score);
+             averageScore = calculateAverageScore(gradingScheme);
+             letterGrade = gradingScheme.calculateLetterGrade(averageScore);
          }
          return letterGrade;
     }

@@ -10,14 +10,14 @@ import java.util.ArrayList;
  */
 
 public interface GradingScheme {
-    int A_CUTOFF = 90;
-    int B_CUTOFF = 80;
-    int C_CUTOFF = 70;
-    int D_CUTOFF = 60;
+    double A_CUTOFF = 90.0;
+    double B_CUTOFF = 80.0;
+    double C_CUTOFF = 70.0;
+    double D_CUTOFF = 60.0;
 
     void addGradebookItems(ArrayList<GradebookItem> gradebookItems);
 
-    int calculateScore();
+    double calculateScore();
 
-    String calculateLetterGrade(int score);
+    String calculateLetterGrade(double score);
 }

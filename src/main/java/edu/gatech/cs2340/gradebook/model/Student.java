@@ -12,7 +12,7 @@ public class Student {
     private String name;
     private ArrayList<GradebookItem> gradebookItems =
         new ArrayList<GradebookItem>();
-    private int score;
+    private double score;
     private String letterGrade;
     private boolean scoreCalculated = false;
 
@@ -36,7 +36,7 @@ public class Student {
         gradebookItems.add(gradebookItem);
     }
 
-    public int calculateScore(GradingScheme gradingScheme) {
+    public double calculateScore(GradingScheme gradingScheme) {
          gradingScheme.addGradebookItems(gradebookItems);
          score = gradingScheme.calculateScore();
          scoreCalculated = true;
